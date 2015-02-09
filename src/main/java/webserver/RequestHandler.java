@@ -19,7 +19,7 @@ public class RequestHandler extends Thread {
 	}
 
 	public void run() {
-		log.debug("New Client Connected!");
+		log.debug("New Client Connect! Connected IP : {}, Port : {}", connection.getInetAddress(), connection.getPort());
 		
 		try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
 			// TODO 사용자 요청에 대한 처리는 이 곳에 구현하면 된다.
@@ -29,7 +29,7 @@ public class RequestHandler extends Thread {
 			response200Header(dos, body.length);
 			responseBody(dos, body);
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
+			log.error(e.getMessage());
 		}
 	}
 
