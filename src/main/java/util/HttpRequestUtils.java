@@ -16,17 +16,17 @@ public class HttpRequestUtils {
 		
 		String[] tokens = queryString.split("&");
 		return Arrays.stream(tokens)
-					.map(t -> getKeyValue(t))
+					.map(t -> getKeyValue(t, "="))
 					.filter(p -> p != null)
 					.collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue()));
 	}
 	
-	static Pair getKeyValue(String keyValue) {
+	static Pair getKeyValue(String keyValue, String regex) {
 		if (Strings.isNullOrEmpty(keyValue)) {
 			return null;
 		}
 		
-		String[] tokens = keyValue.split("=");
+		String[] tokens = keyValue.split(regex);
 		if (tokens.length != 2) {
 			return null;
 		}
@@ -34,7 +34,11 @@ public class HttpRequestUtils {
 		return new Pair(tokens[0], tokens[1]);
 	}
 	
-	static class Pair {
+	public static Pair parseHeader(String header) {
+		return getKeyValue(header, ": ");
+	}
+	
+	public static class Pair {
 		String key;
 		String value;
 		
@@ -43,11 +47,11 @@ public class HttpRequestUtils {
 			this.value = value;
 		}
 		
-		String getKey() {
+		public String getKey() {
 			return key;
 		}
 		
-		String getValue() {
+		public String getValue() {
 			return value;
 		}
 
