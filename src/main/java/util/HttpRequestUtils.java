@@ -8,7 +8,10 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 
 public class HttpRequestUtils {
-
+	/**
+	 * @param queryString은 URL에서 ? 이후에 전달되는 name=value 임
+	 * @return
+	 */
 	public static Map<String, String> parseQueryString(String queryString) {
 		if (Strings.isNullOrEmpty(queryString)) {
 			return Maps.newHashMap();
