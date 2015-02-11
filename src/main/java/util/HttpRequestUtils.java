@@ -1,32 +1,37 @@
 package util;
 
+import java.util.Arrays;
 import java.util.Map;
-import java.util.StringTokenizer;
+import java.util.stream.Collectors;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 
 public class HttpRequestUtils {
 
 	public static Map<String, String> parseQueryString(String queryString) {
-		StringTokenizer st = new StringTokenizer(queryString, "&");
-		Map<String, String> parameters = Maps.newHashMap();
-		while(st.hasMoreTokens()) {
-			Pair keyValue = getKeyValue(st.nextToken());
-			if (keyValue == null) {
-				continue;
-			}
-			parameters.put(keyValue.getKey(), keyValue.getValue());
+		if (Strings.isNullOrEmpty(queryString)) {
+			return Maps.newHashMap();
 		}
-		return parameters;
+		
+		String[] tokens = queryString.split("&");
+		return Arrays.stream(tokens)
+					.map(t -> getKeyValue(t))
+					.filter(p -> p != null)
+					.collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue()));
 	}
 	
 	static Pair getKeyValue(String keyValue) {
-		StringTokenizer st = new StringTokenizer(keyValue, "=");
-		if (st.countTokens() != 2) {
+		if (Strings.isNullOrEmpty(keyValue)) {
 			return null;
 		}
 		
-		return new Pair(st.nextToken(), st.nextToken());
+		String[] tokens = keyValue.split("=");
+		if (tokens.length != 2) {
+			return null;
+		}
+		
+		return new Pair(tokens[0], tokens[1]);
 	}
 	
 	static class Pair {

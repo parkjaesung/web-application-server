@@ -12,10 +12,27 @@ import util.HttpRequestUtils.Pair;
 public class HttpRequestUtilsTest {
 	@Test
 	public void parseQueryString() {
-		String queryString = "userId=javajigi&password=password2";
+		String queryString = "userId=javajigi";
 		Map<String, String> parameters = HttpRequestUtils.parseQueryString(queryString);
 		assertThat(parameters.get("userId"), is("javajigi"));
+		assertThat(parameters.get("password"), is(nullValue()));
+		
+		queryString = "userId=javajigi&password=password2";
+		parameters = HttpRequestUtils.parseQueryString(queryString);
+		assertThat(parameters.get("userId"), is("javajigi"));
 		assertThat(parameters.get("password"), is("password2"));
+	}
+	
+	@Test
+	public void parseQueryString_null() {
+		Map<String, String> parameters = HttpRequestUtils.parseQueryString(null);
+		assertThat(parameters.isEmpty(), is(true));
+		
+		parameters = HttpRequestUtils.parseQueryString("");
+		assertThat(parameters.isEmpty(), is(true));
+		
+		parameters = HttpRequestUtils.parseQueryString(" ");
+		assertThat(parameters.isEmpty(), is(true));
 	}
 	
 	@Test
