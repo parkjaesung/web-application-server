@@ -88,5 +88,10 @@ public class HttpRequestUtils {
 				return false;
 			return true;
 		}
+
+		@Override
+		public String toString() {
+			return "Pair [key=" + key + ", value=" + value + "]";
+		}
 	}
 }
