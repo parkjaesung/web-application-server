@@ -6,6 +6,8 @@ import java.util.Map;
 
 public class Header {
 	
+	//status 코드와 메시지를 맵으로 저장...
+	//static{} 사용 괜찮은지??
 	private static final Map<String, String> status = new HashMap<String, String>();
 	static{
 		status.put("200", "Ok");
@@ -16,6 +18,7 @@ public class Header {
 		status.put("500", "Internal Server Error");
 	}
 	
+	//builder pattern 적용. 적당한 경우인지? 
 	private final String statusCode;
 	private final String location;
 	private final String contentType;
@@ -89,22 +92,22 @@ public class Header {
 			headerString += "Content-Type: " + contentType + ";";
 		if(encoding != null)
 			headerString += "charset="+ encoding +"\r\n";
+		if(length != null)
+			headerString += "Content-Length: " + length + "\r\n";
 		if(cookie!= null){
 			headerString += "Set-Cookie: ";
 			for(Map.Entry<String, String> entry : cookie.entrySet()){
 				headerString += entry.getKey() +"="+ entry.getValue()+";";
 			}
-			headerString += " \r\n";
+			headerString += "\r\n";
 		}
-		if(length != null)
-			headerString += "Content-Length: " + length + "\r\n";
 		
+		//header 마지막
 		headerString += "\r\n";
 
 		try {
 			return headerString.getBytes(encoding);
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

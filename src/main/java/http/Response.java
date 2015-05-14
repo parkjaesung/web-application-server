@@ -1,5 +1,6 @@
 package http;
 
+//header & body의 컨테이너
 public class Response {
 	private Header header;
 	private byte[] body;

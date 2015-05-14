@@ -2,11 +2,15 @@ package http;
 
 import java.util.Map;
 
+//기본적으로 사용되는 response들을 쉽게 만들수 있도록 미리 셋팅해서 return. 
+//static으로 적당한지??
+//TODO POJO를 받아서 JSON형식으로 return할 수 있도록 개선할 것. 
 public class ResponseFactory {
 	
 	public static Response get200Html(String content, String encoding){
 		return get200Html(content,encoding,null);
 	}
+	
 	public static Response get200Html(String content, String encoding, Map<String,String> cookie){
 		byte[] body = content.getBytes();
 		Header header = Header.Builder
@@ -70,8 +74,4 @@ public class ResponseFactory {
 		
 		return new Response(header, body);
 	}
-	
-	
-	
-	
 }

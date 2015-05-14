@@ -26,6 +26,8 @@ public class RequestHandler extends Thread {
 	public void run() {
 		log.debug("New Client Connect! Connected IP : {}, Port : {}", connection.getInetAddress(), connection.getPort());
 		
+		//Controller 맵핑
+		//TODO annotation 기반으로 개선할것
 		Map<String,String> controllerMap = new HashMap<String, String>();
 		controllerMap.put("create", "CreateUser");	
 		controllerMap.put("login", "Login");
@@ -41,6 +43,7 @@ public class RequestHandler extends Thread {
 		}
 	}
 	
+	//response객체를 받아서 header와 body를 차례로 전송
 	private void response(DataOutputStream dos, Response rp) {
 		try {
 			byte[] header = rp.getHeader();

@@ -16,6 +16,8 @@ import util.HttpRequestUtils;
 import util.IOUtils;
 import webserver.RequestHandler;
 
+//대체로 getter만 만들었는데, 단위테스트를 위해서 setter도 만들어 두는것이 타당한지??
+//field가 너무 많은것 처럼 느껴지는데 개선할 방법이 있는지?
 public class Request{
 	private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
 	
@@ -32,10 +34,7 @@ public class Request{
 	private String accept;
 	private String body;
 	private Map<String, String> params;
-	
 	private Boolean valid;
-	//TODO
-	public Request(){}
 	
 	public Request(InputStream in){
 		try {
@@ -43,15 +42,18 @@ public class Request{
 			urlHeader = inputReader.readLine();
 			log.debug("url {} requested",urlHeader);
 			
+			//아래 private 함수들은 클래스 내부에서만 쓸 거라서 클래스의 필드들을 활용하도록 하고
+			//파라미터 없는 void() 함수로 했는데 괜찮은지??
+			//여기에서 try/catch로 처리하기 편하게 하려고 전부 throw 하도록 했는데, return boolean으로 처리하는게 나은지?
 			parseUrl(); 
 			parseHeader();
 			getBody();
 			
 		} catch (IOException e) {
+			//헤더가 형식에 안맞을 경우 invalid 처리. rqMapper에서 bad request로 넘김.
 			log.debug("wrong header!");
 			valid = false;
 		}
-		
 		valid = true;
 	}
 	
