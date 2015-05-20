@@ -41,7 +41,7 @@ public class RequestMapper {
 		}else{
 			try {
 				byte[] body = Files.readAllBytes(Paths.get(root + rq.getFilePath()));
-				Header header = Header.Builder
+				Header header = Header.Builder.n()
 						.statusCode("200")
 						.contentType(rq.getAccept())
 						.encoding(encoding)

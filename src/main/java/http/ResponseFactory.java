@@ -62,7 +62,7 @@ public class ResponseFactory {
 	
 	private static Response createSimpleResponse(String statusCode, String body, String encoding, Map<String,String> cookie, String location, String contentType){
 		byte[] bodyBytes = (body != null) ? body.getBytes() : "".getBytes();
-		Header header = Header.Builder
+		Header header = Header.Builder.n()
 				.statusCode(statusCode)
 				.contentType(contentType)
 				.length(bodyBytes.length)

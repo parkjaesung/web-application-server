@@ -6,8 +6,6 @@ import java.util.Map;
 
 public class Header {
 	
-	//status 코드와 메시지를 맵으로 저장...
-	//static{} 사용 괜찮은지??
 	private static final Map<String, String> status = new HashMap<String, String>();
 	static{
 		status.put("200", "Ok");
@@ -17,8 +15,7 @@ public class Header {
 		status.put("404", "Not Found");
 		status.put("500", "Internal Server Error");
 	}
-	
-	//builder pattern 적용. 적당한 경우인지? 
+
 	private final String statusCode;
 	private final String location;
 	private final String contentType;
@@ -47,10 +44,9 @@ public class Header {
 			return new Builder();
 		}
 
-		public static Builder statusCode(String statusCode) {
-			Builder b = new Builder();
-			b.statusCode = statusCode;
-			return b;
+		public Builder statusCode(String statusCode) {
+			this.statusCode = statusCode;
+			return this;
 		}
 		
 		public Builder location(String location) {
