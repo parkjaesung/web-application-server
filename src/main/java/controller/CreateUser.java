@@ -11,9 +11,11 @@ import model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import controller.Controller.Urlmap;
 import webserver.RequestHandler;
 import db.UserDb;
 
+@Urlmap(url="create")
 public class CreateUser implements Controller {
 	private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
 
