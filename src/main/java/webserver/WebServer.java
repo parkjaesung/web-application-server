@@ -12,7 +12,6 @@ public class WebServer {
 	private static final int DEFAULT_PORT = 8080;
 	
     public static void main(String argv[]) throws Exception {
-    	
 		
     	//controller map setting
     	RequestMap.setMap(new File("controllerMap.xml"));

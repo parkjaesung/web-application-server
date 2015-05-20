@@ -2,8 +2,6 @@ package http;
 
 import java.util.Map;
 
-//기본적으로 사용되는 response들을 쉽게 만들수 있도록 미리 셋팅해서 return. 
-//static으로 적당한지??
 //TODO POJO를 받아서 JSON형식으로 return할 수 있도록 개선할 것. 
 public class ResponseFactory {
 	
@@ -12,16 +10,7 @@ public class ResponseFactory {
 	}
 	
 	public static Response get200Html(String content, String encoding, Map<String,String> cookie){
-		byte[] body = content.getBytes();
-		Header header = Header.Builder
-				.statusCode("200")
-				.contentType("text/html")
-				.length(body.length)
-				.encoding(encoding)
-				.cookie(cookie)
-				.build();
-		
-		return new Response(header, body);
+		return createSimpleResponse("200", content, encoding, cookie, null);
 	}
 	
 	public static Response get302(String location, String encoding){
@@ -29,49 +18,31 @@ public class ResponseFactory {
 	}
 	
 	public static Response get302(String location, String encoding, Map<String,String> cookie){
+		return createSimpleResponse("302", null, encoding, cookie, location);
+	}
+	
+	public static Response get400Html(String encoding){
+		return createSimpleResponse("400","400",encoding, null, null);
+	}
+	
+	public static Response get404Html(String encoding){
+		return createSimpleResponse("404","404",encoding, null, null);
+	}
+	
+	public static Response get500Html(String encoding){
+		return createSimpleResponse("500","500",encoding, null, null);
+	}
+	
+	private static Response createSimpleResponse(String statusCode, String body, String encoding, Map<String,String> cookie, String location){
+		byte[] bodyBytes = body.getBytes();
 		Header header = Header.Builder
-				.statusCode("302")
-				.location(location)
+				.statusCode(statusCode)
+				.contentType("text/html")
+				.length(bodyBytes.length)
 				.encoding(encoding)
 				.cookie(cookie)
 				.build();
 		
-		return new Response(header, null);
-	}
-	
-	public static Response get400Html(String encoding){
-		byte[] body = "400".getBytes();
-		Header header = Header.Builder
-				.statusCode("403")
-				.contentType("text/html")
-				.length(body.length)
-				.encoding(encoding)
-				.build();
-		
-		return new Response(header, body);
-	}
-	
-	public static Response get404Html(String encoding){
-		byte[] body = "404".getBytes();
-		Header header = Header.Builder
-				.statusCode("404")
-				.contentType("text/html")
-				.length(body.length)
-				.encoding(encoding)
-				.build();
-		
-		return new Response(header, body);
-	}
-	
-	public static Response get500Html(String encoding){
-		byte[] body = "500".getBytes();
-		Header header = Header.Builder
-				.statusCode("500")
-				.contentType("text/html")
-				.length(body.length)
-				.encoding(encoding)
-				.build();
-		
-		return new Response(header, body);
+		return new Response(header, bodyBytes);
 	}
 }
