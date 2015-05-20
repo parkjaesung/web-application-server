@@ -8,6 +8,6 @@ public class PrintCookie implements Controller{
 
 	@Override
 	public Response service(Request rq){
-		return ResponseFactory.get200Html(rq.getCookie().toString(), "UTF-8");
+		return ResponseFactory.get200Json(rq.getCookie(), "UTF-8");
 	}
 }
