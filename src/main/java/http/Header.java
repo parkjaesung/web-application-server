@@ -43,7 +43,7 @@ public class Header {
 		private Integer length;
 		private String encoding;
 		
-		public static Builder create() {
+		public static Builder n() {
 			return new Builder();
 		}
 

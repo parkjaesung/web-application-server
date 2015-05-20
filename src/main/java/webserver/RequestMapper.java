@@ -27,7 +27,6 @@ public class RequestMapper {
 		this.requestMapping = requsetMapping;
 	}
 
-	//reflection 사용시 unchecked 안뜨도록 체크하는 방법?
 	public Response getResponse(Request rq){
 		Controller controller;
 		
