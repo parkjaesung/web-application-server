@@ -4,7 +4,6 @@ import http.Request;
 import http.Response;
 import http.ResponseFactory;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +19,7 @@ public class Login implements Controller {
 	private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
 	
 	@Override
-	public Response service(Request rq) throws IOException {
+	public Response service(Request rq){
 		Map<String,String> params = rq.getParams(); 
 		
 		log.debug("controller loginController, param : {}.",params);

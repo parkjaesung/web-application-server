@@ -4,12 +4,10 @@ import http.Request;
 import http.Response;
 import http.ResponseFactory;
 
-import java.io.IOException;
-
 public class PrintCookie implements Controller{
 
 	@Override
-	public Response service(Request rq) throws IOException {
+	public Response service(Request rq){
 		return ResponseFactory.get200Html(rq.getCookie().toString(), "UTF-8");
 	}
 }

@@ -42,6 +42,10 @@ public class Header {
 		private Map<String,String> cookie;
 		private Integer length;
 		private String encoding;
+		
+		public static Builder create() {
+			return new Builder();
+		}
 
 		public static Builder statusCode(String statusCode) {
 			Builder b = new Builder();

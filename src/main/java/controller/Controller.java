@@ -1,11 +1,9 @@
 package controller;
 
-import http.Response;
 import http.Request;
-
-import java.io.IOException;
+import http.Response;
 
 
 public interface Controller {	
-	public abstract Response service(Request rq) throws IOException;
+	Response service(Request rq);
 }
