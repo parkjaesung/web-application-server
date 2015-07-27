@@ -1,0 +1,15 @@
+<root>
+	<!--annotation 기반으로 전환-->
+	<!--controller>
+		<controller-name>create</controller-name>
+		<controller-class>CreateUser</controller-class>
+	</controller-->
+	<controller>
+		<controller-name>login</controller-name>
+		<controller-class>Login</controller-class>
+	</controller>
+	<controller>
+		<controller-name>printcookie</controller-name>
+		<controller-class>PrintCookie</controller-class>
+	</controller>
+</root>

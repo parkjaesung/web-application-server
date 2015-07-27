@@ -1,5 +1,6 @@
 package webserver;
 
+import java.io.File;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -11,8 +12,11 @@ public class WebServer {
 	private static final int DEFAULT_PORT = 8080;
 	
     public static void main(String argv[]) throws Exception {
-        // 서버소켓을 생성한다. 웹서버는 기본적으로 8080번 포트를 사용한다.
+		
+    	//controller map setting
+    	RequestMap.setMap(new File("controllerMap.xml"));
     	
+        // 서버소켓을 생성한다. 웹서버는 기본적으로 8080번 포트를 사용한다.
     	try (ServerSocket listenSocket = new ServerSocket(DEFAULT_PORT)) {
     		log.info("Web Application Server started {} port.", DEFAULT_PORT);
 

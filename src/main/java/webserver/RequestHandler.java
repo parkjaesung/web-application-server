@@ -1,5 +1,8 @@
 package webserver;
 
+import http.Request;
+import http.Response;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,29 +25,21 @@ public class RequestHandler extends Thread {
 		log.debug("New Client Connect! Connected IP : {}, Port : {}", connection.getInetAddress(), connection.getPort());
 		
 		try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
-			// TODO 사용자 요청에 대한 처리는 이 곳에 구현하면 된다.
 			DataOutputStream dos = new DataOutputStream(out);
-			byte[] body = "Hello World".getBytes();
-			response200Header(dos, body.length);
-			responseBody(dos, body);
-		} catch (IOException e) {
-			log.error(e.getMessage());
-		}
-	}
-
-	private void response200Header(DataOutputStream dos, int lengthOfBodyContent) {
-		try {
-			dos.writeBytes("HTTP/1.1 200 OK \r\n");
-			dos.writeBytes("Content-Type: text/html;charset=utf-8\r\n");
-			dos.writeBytes("Content-Length: " + lengthOfBodyContent + "\r\n");
-			dos.writeBytes("\r\n");
+			RequestMapper rm = new RequestMapper("webapp", RequestMap.getMap(), "UTF-8");
+			Request rq = new Request(in);
+			response(dos, rm.getResponse(rq));
 		} catch (IOException e) {
 			log.error(e.getMessage());
 		}
 	}
 	
-	private void responseBody(DataOutputStream dos, byte[] body) {
+	//response객체를 받아서 header와 body를 차례로 전송
+	private void response(DataOutputStream dos, Response rp) {
 		try {
+			byte[] header = rp.getHeader();
+			byte[] body = rp.getBody();
+			dos.write(header, 0, header.length);
 			dos.write(body, 0, body.length);
 			dos.writeBytes("\r\n");
 			dos.flush();
