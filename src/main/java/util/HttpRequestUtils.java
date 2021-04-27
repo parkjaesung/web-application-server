@@ -40,6 +40,12 @@ public class HttpRequestUtils {
 	public static Pair parseHeader(String header) {
 		return getKeyValue(header, ": ");
 	}
+
+	public static String parseUrl(String line) {
+		String[] tokens = line.split(" ");
+		String url = tokens[1];
+		return url;
+	}
 	
 	public static class Pair {
 		String key;
