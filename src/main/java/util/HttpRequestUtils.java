@@ -1,13 +1,18 @@
 package util;
 
+import com.google.common.base.Strings;
+import com.google.common.collect.Maps;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import webserver.RequestHandler;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.google.common.base.Strings;
-import com.google.common.collect.Maps;
-
 public class HttpRequestUtils {
+	private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
+
 	/**
 	 * @param queryString은 URL에서 ? 이후에 전달되는 name=value 임
 	 * @return
@@ -44,6 +49,7 @@ public class HttpRequestUtils {
 	public static String parseUrl(String line) {
 		String[] tokens = line.split(" ");
 		String url = tokens[1];
+		log.debug("url : {}", url);
 		return url;
 	}
 	
